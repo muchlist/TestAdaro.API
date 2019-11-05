@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using TesAdaro.API.Data;
 using TesAdaro.API.Dtos;
@@ -10,26 +12,44 @@ namespace TesAdaro.API.Controllers
     [ApiController]
     public class DosenController : ControllerBase
     {
-        private readonly IDosenRepository _repo;
+        private readonly IPerkuliahanRepository _repo;
+        private readonly IMapper _mapper;
 
-        public DosenController(IDosenRepository repo)
+        public DosenController(IPerkuliahanRepository repo, IMapper mapper)
         {
+            _mapper = mapper;
             _repo = repo;
 
         }
 
-        [HttpPost("daftar")]
-        public async Task<IActionResult> Daftar(DosenUDaftarDto dosenDto)
+        [HttpGet]
+        public async Task<IActionResult> GetDosens()
         {
-            if(await _repo.DosenExists(dosenDto.Nip))
-                return BadRequest("nip sudah terdaftar");
-            var dosenAkanDibuat = new Dosen
-            {
-                Nip = dosenDto.Nip,
-                NamaDosen = dosenDto.NamaDosen
-            };
-            var dosenSudahDibuat = await _repo.Daftar(dosenAkanDibuat);
-            return StatusCode(201);
+            var dosens = await _repo.GetDosens();
+            var dosensToReturn = _mapper.Map<IEnumerable<DosenForListDto>>(dosens);
+            return Ok(dosensToReturn);
         }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetDosen(int id)
+        {
+            var dosen = await _repo.GetDosen(id);
+            var dosenToReturn = _mapper.Map<DosenForDetailDto>(dosen);
+            return Ok(dosenToReturn);
+        }
+
+        // [HttpPost("daftar")]
+        // public async Task<IActionResult> Daftar(DosenUDaftarDto dosenDto)
+        // {
+        //     if(await _repo.DosenExist(dosenDto.Nip))
+        //         return BadRequest("nip sudah terdaftar");
+        //     var dosenAkanDibuat = new Dosen
+        //     {
+        //         Nip = dosenDto.Nip,
+        //         NamaDosen = dosenDto.NamaDosen
+        //     };
+        //     var dosenSudahDibuat = await _repo.Add(dosenAkanDibuat);
+        //     return StatusCode(201);
+        // }
     }
 }

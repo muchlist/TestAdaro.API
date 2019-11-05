@@ -1,17 +1,14 @@
 using System.Collections.Generic;
+using TesAdaro.API.Models;
 
-namespace TesAdaro.API.Models
+namespace TesAdaro.API.Dtos
 {
-    public class MataKuliah
+    public class MataKuliahForDetailDto
     {
         public int Id { get; set; }
         public string KodeMK { get; set; }
         public string NamaMK { get; set; }
         public int Sks { get; set; }
-        public ICollection<Perkuliahan> Perkuliahans { get; set; }
+        public ICollection<PerkuliahanForDetailedDto> Perkuliahans { get; set; }
     }
 }
-
-//Kode_MK varchar 6
-//Nama_MK varchar 20
-//Sks  int 2

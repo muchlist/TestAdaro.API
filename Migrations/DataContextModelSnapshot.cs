@@ -27,7 +27,7 @@ namespace TesAdaro.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Dosen");
+                    b.ToTable("Dosens");
                 });
 
             modelBuilder.Entity("TesAdaro.API.Models.Mahasiswa", b =>
@@ -47,7 +47,7 @@ namespace TesAdaro.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Mahasiswa");
+                    b.ToTable("Mahasiswas");
                 });
 
             modelBuilder.Entity("TesAdaro.API.Models.MataKuliah", b =>
@@ -55,15 +55,15 @@ namespace TesAdaro.API.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("KodeMK");
+
                     b.Property<string>("NamaMK");
 
                     b.Property<int>("Sks");
 
-                    b.Property<string>("kodeMK");
-
                     b.HasKey("Id");
 
-                    b.ToTable("MataKuliah");
+                    b.ToTable("MataKuliahs");
                 });
 
             modelBuilder.Entity("TesAdaro.API.Models.Perkuliahan", b =>

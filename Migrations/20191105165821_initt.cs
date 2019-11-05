@@ -3,12 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TesAdaro.API.Migrations
 {
-    public partial class extendedModela : Migration
+    public partial class initt : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Dosen",
+                name: "Dosens",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -18,11 +18,11 @@ namespace TesAdaro.API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Dosen", x => x.Id);
+                    table.PrimaryKey("PK_Dosens", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Mahasiswa",
+                name: "Mahasiswas",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -35,22 +35,22 @@ namespace TesAdaro.API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Mahasiswa", x => x.Id);
+                    table.PrimaryKey("PK_Mahasiswas", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "MataKuliah",
+                name: "MataKuliahs",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    kodeMK = table.Column<string>(nullable: true),
+                    KodeMK = table.Column<string>(nullable: true),
                     NamaMK = table.Column<string>(nullable: true),
                     Sks = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MataKuliah", x => x.Id);
+                    table.PrimaryKey("PK_MataKuliahs", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -68,21 +68,21 @@ namespace TesAdaro.API.Migrations
                 {
                     table.PrimaryKey("PK_Perkuliahans", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Perkuliahans_Dosen_DosenId",
+                        name: "FK_Perkuliahans_Dosens_DosenId",
                         column: x => x.DosenId,
-                        principalTable: "Dosen",
+                        principalTable: "Dosens",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Perkuliahans_Mahasiswa_MahasiswaId",
+                        name: "FK_Perkuliahans_Mahasiswas_MahasiswaId",
                         column: x => x.MahasiswaId,
-                        principalTable: "Mahasiswa",
+                        principalTable: "Mahasiswas",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Perkuliahans_MataKuliah_MataKuliahId",
+                        name: "FK_Perkuliahans_MataKuliahs_MataKuliahId",
                         column: x => x.MataKuliahId,
-                        principalTable: "MataKuliah",
+                        principalTable: "MataKuliahs",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -109,13 +109,13 @@ namespace TesAdaro.API.Migrations
                 name: "Perkuliahans");
 
             migrationBuilder.DropTable(
-                name: "Dosen");
+                name: "Dosens");
 
             migrationBuilder.DropTable(
-                name: "Mahasiswa");
+                name: "Mahasiswas");
 
             migrationBuilder.DropTable(
-                name: "MataKuliah");
+                name: "MataKuliahs");
         }
     }
 }
