@@ -38,7 +38,7 @@ namespace TesAdaro.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddDosen(DosenUDaftarDto dosenDto)
+        public async Task<IActionResult> AddDosen([FromBody]DosenForCreateDto dosenDto)
         {
             if (await _repo.DosenExist(dosenDto.Nip))
                 return BadRequest("Nip sudah terdaftar");
@@ -53,6 +53,31 @@ namespace TesAdaro.API.Controllers
             if (await _repo.SaveAll())
             {
                 return StatusCode(201);
+            }
+            return BadRequest("Terjadi Kesalahan");
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateDosen(int id, [FromBody]DosenForCreateDto dosenDto)
+        {
+            await _repo.UpdateDosen(id, dosenDto);
+            
+            if (await _repo.SaveAll())
+            {
+                return StatusCode(200);
+            }
+            return BadRequest("Terjadi Kesalahan");
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteDosen(int id)
+        {
+            var dosenToDelete = await _repo.GetDosen(id);
+
+            _repo.Delete(dosenToDelete);
+            if (await _repo.SaveAll())
+            {
+                return StatusCode(200);
             }
             return BadRequest("Terjadi Kesalahan");
         }

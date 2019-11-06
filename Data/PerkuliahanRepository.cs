@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using TesAdaro.API.Dtos;
 using TesAdaro.API.Models;
 
 namespace TesAdaro.API.Data
@@ -35,9 +37,25 @@ namespace TesAdaro.API.Data
             return dosens;
         }
 
+        public async Task UpdateDosen(int id, DosenForCreateDto dosenDto)
+        {
+            var dosen = await _context.Dosens
+                .FirstOrDefaultAsync(p => p.Id == id);
+            dosen.NamaDosen = dosenDto.NamaDosen;
+        }
+
+        public async Task<bool> DosenExist(string nip)
+        {
+            if (await _context.Dosens.AnyAsync(x => x.Nip == nip))
+                return true;
+            return false;
+        }
+
         public async Task<Mahasiswa> GetMahasiswa(int id)
         {
-            var mahasiswa = await _context.Mahasiswas.Include(d => d.Perkuliahans).FirstOrDefaultAsync(p => p.Id == id);
+            var mahasiswa = await _context.Mahasiswas
+                .Include(d => d.Perkuliahans)
+                .FirstOrDefaultAsync(p => p.Id == id);
             return mahasiswa;
         }
 
@@ -45,6 +63,23 @@ namespace TesAdaro.API.Data
         {
             var mahasiswa = await _context.Mahasiswas.Include(d => d.Perkuliahans).ToListAsync();
             return mahasiswa;
+        }
+
+        public async Task UpdateMahasiswa(int id, MahasiswaForCreate mahasiswaDto)
+        {
+            var mahasiswa = await _context.Mahasiswas
+                .FirstOrDefaultAsync(p => p.Id == id);
+            mahasiswa.NamaMhs = mahasiswaDto.NamaMhs;
+            mahasiswa.TglLahir = mahasiswaDto.TglLahir;
+            mahasiswa.Alamat = mahasiswaDto.Alamat;
+            mahasiswa.TglLahir = mahasiswaDto.TglLahir;
+        }
+
+        public async Task<bool> MahasiswaExist(string nim)
+        {
+            if (await _context.Mahasiswas.AnyAsync(x => x.Nim == nim))
+                return true;
+            return false;
         }
 
         public async Task<MataKuliah> GetMataKuliah(int id)
@@ -59,21 +94,14 @@ namespace TesAdaro.API.Data
             return mataKuliahs;
         }
 
-
-        public async Task<bool> DosenExist(string nip)
+        public async Task UpdateMataKuliah(int id, MataKuliahForCreate mataKuliahDto)
         {
-            if (await _context.Dosens.AnyAsync(x => x.Nip == nip))
-                return true;
-            return false;
+            var matkul = await _context.MataKuliahs
+                .FirstOrDefaultAsync(p => p.Id == id);
+            matkul.NamaMK = mataKuliahDto.NamaMK;
+            matkul.Sks = mataKuliahDto.Sks;
         }
 
-
-        public async Task<bool> MahasiswaExist(string nim)
-        {
-            if (await _context.Mahasiswas.AnyAsync(x => x.Nim == nim))
-                return true;
-            return false;
-        }
 
         public async Task<Perkuliahan> GetPerkuliahan(int id)
         {
@@ -93,6 +121,29 @@ namespace TesAdaro.API.Data
                 .Include(k => k.MataKuliah).ToListAsync();
                 
             return perkuliahans;
+        }
+
+        public async Task UpdatePerkuliahan(int id, PerkuliahanForCreateDto perkuliahanDto)
+        {
+            var dosen = await _context.Dosens
+                .FirstOrDefaultAsync(p => p.Id == perkuliahanDto.DosenId);
+            var matkul = await _context.MataKuliahs
+                .FirstOrDefaultAsync(p => p.Id == perkuliahanDto.MataKuliahId);
+            var mahasiswa = await _context.Mahasiswas
+                .FirstOrDefaultAsync(p => p.Id == perkuliahanDto.MahasiswaId);
+            
+            var perkuliahan = await _context.Perkuliahans
+                .Include(d => d.Dosen)
+                .Include(m => m.Mahasiswa)
+                .Include(k => k.MataKuliah).FirstOrDefaultAsync(p => p.Id == id);
+
+            perkuliahan.Nilai = perkuliahanDto.Nilai;
+            perkuliahan.DosenId = perkuliahanDto.DosenId;
+            perkuliahan.MahasiswaId = perkuliahanDto.MahasiswaId;
+            perkuliahan.MataKuliahId = perkuliahanDto.MataKuliahId;
+            perkuliahan.Dosen = dosen;
+            perkuliahan.Mahasiswa = mahasiswa;
+            perkuliahan.MataKuliah = matkul;
         }
 
         public async Task<bool> SaveAll()

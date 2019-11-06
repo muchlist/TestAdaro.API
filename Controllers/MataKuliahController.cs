@@ -38,7 +38,7 @@ namespace TesAdaro.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddMataKuliah(MataKuliahForCreate mataKuliahdto)
+        public async Task<IActionResult> AddMataKuliah([FromBody] MataKuliahForCreate mataKuliahdto)
         {
             var mataKuliahToCreate = new MataKuliah
             {
@@ -51,6 +51,31 @@ namespace TesAdaro.API.Controllers
             if (await _repo.SaveAll())
             {
                 return StatusCode(201);
+            }
+            return BadRequest("Terjadi Kesalahan");
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateMataKuliah(int id, [FromBody] MataKuliahForCreate matkulDto)
+        {
+            await _repo.UpdateMataKuliah(id, matkulDto);
+            
+            if (await _repo.SaveAll())
+            {
+                return StatusCode(200);
+            }
+            return BadRequest("Terjadi Kesalahan");
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteMataKuliah(int id)
+        {
+            var mataKuliahToDelete = await _repo.GetMataKuliah(id);
+
+            _repo.Delete(mataKuliahToDelete);
+            if (await _repo.SaveAll())
+            {
+                return StatusCode(200);
             }
             return BadRequest("Terjadi Kesalahan");
         }

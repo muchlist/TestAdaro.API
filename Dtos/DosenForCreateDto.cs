@@ -2,11 +2,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace TesAdaro.API.Dtos
 {
-    public class DosenUDaftarDto
+    public class DosenForCreateDto
     {
-        [Required]
         public string Nip { get; set; }
-        [Required]
         public string NamaDosen { get; set; }
     }
 }

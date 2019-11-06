@@ -38,7 +38,7 @@ namespace TesAdaro.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddPerkuliahan(PerkuliahanForCreateDto perkuliahanDto)
+        public async Task<IActionResult> AddPerkuliahan([FromBody] PerkuliahanForCreateDto perkuliahanDto)
         {
             var dosen = await _repo.GetDosen(perkuliahanDto.DosenId);
             var mahasiswa = await _repo.GetMahasiswa(perkuliahanDto.MahasiswaId);
@@ -59,6 +59,31 @@ namespace TesAdaro.API.Controllers
             if (await _repo.SaveAll())
             {
                 return StatusCode(201);
+            }
+            return BadRequest("Terjadi Kesalahan");
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdatePerkuliahan(int id, [FromBody] PerkuliahanForCreateDto perkuliahanDto)
+        {
+            await _repo.UpdatePerkuliahan(id, perkuliahanDto);
+            
+            if (await _repo.SaveAll())
+            {
+                return StatusCode(200);
+            }
+            return BadRequest("Terjadi Kesalahan");
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeletePerkuliahan(int id)
+        {
+            var perkuliahanToDelete = await _repo.GetPerkuliahan(id);
+
+            _repo.Delete(perkuliahanToDelete);
+            if (await _repo.SaveAll())
+            {
+                return StatusCode(200);
             }
             return BadRequest("Terjadi Kesalahan");
         }

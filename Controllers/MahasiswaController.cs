@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -39,7 +40,7 @@ namespace TesAdaro.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddMahasiswa(MahasiswaForCreate mahasiswaDto)
+        public async Task<IActionResult> AddMahasiswa([FromBody] MahasiswaForCreate mahasiswaDto)
         {
             if (await _repo.MahasiswaExist(mahasiswaDto.Nim))
                 return BadRequest("NIM sudah terdaftar");
@@ -57,6 +58,31 @@ namespace TesAdaro.API.Controllers
             if (await _repo.SaveAll())
             {
                 return StatusCode(201);
+            }
+            return BadRequest("Terjadi Kesalahan");
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateMahasiswa(int id, [FromBody] MahasiswaForCreate mahasiswaDto)
+        {
+            await _repo.UpdateMahasiswa(id, mahasiswaDto);
+            
+            if (await _repo.SaveAll())
+            {
+                return StatusCode(200);
+            }
+            return BadRequest("Terjadi Kesalahan");
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteMahasiswa(int id)
+        {
+            var mahasiswaToDelete = await _repo.GetMahasiswa(id);
+
+            _repo.Delete(mahasiswaToDelete);
+            if (await _repo.SaveAll())
+            {
+                return StatusCode(200);
             }
             return BadRequest("Terjadi Kesalahan");
         }
