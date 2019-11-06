@@ -9,14 +9,14 @@ using TesAdaro.API.Data;
 namespace TesAdaro.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20191105165821_initt")]
-    partial class initt
+    [Migration("20191106053454_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.11-servicing-32099");
+                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079");
 
             modelBuilder.Entity("TesAdaro.API.Models.Dosen", b =>
                 {
@@ -79,7 +79,7 @@ namespace TesAdaro.API.Migrations
 
                     b.Property<int>("MataKuliahId");
 
-                    b.Property<char>("Nilai");
+                    b.Property<string>("Nilai");
 
                     b.HasKey("Id");
 

@@ -10,6 +10,10 @@ namespace TesAdaro.API.Helpers
         {
             CreateMap<Dosen, DosenForListDto>();
             CreateMap<Dosen, DosenForDetailDto>();
+            CreateMap<Mahasiswa, MahasiswaForListDto>();
+            CreateMap<Mahasiswa, MahasiswaForDetailDto>();
+            CreateMap<MataKuliah, MataKuliahForListDto>();
+            CreateMap<MataKuliah, MataKuliahForDetailDto>();
             CreateMap<Perkuliahan, PerkuliahanForDetailedDto>();
         }
     }

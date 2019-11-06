@@ -14,7 +14,7 @@ namespace TesAdaro.API.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.11-servicing-32099");
+                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079");
 
             modelBuilder.Entity("TesAdaro.API.Models.Dosen", b =>
                 {
@@ -77,7 +77,7 @@ namespace TesAdaro.API.Migrations
 
                     b.Property<int>("MataKuliahId");
 
-                    b.Property<char>("Nilai");
+                    b.Property<string>("Nilai");
 
                     b.HasKey("Id");
 

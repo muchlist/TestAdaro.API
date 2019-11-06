@@ -17,5 +17,7 @@ namespace TesAdaro.API.Data
         Task<bool> MahasiswaExist(string nim);
         Task<IEnumerable<MataKuliah>> GetMataKuliahs();
         Task<MataKuliah> GetMataKuliah(int id);
+        Task<IEnumerable<Perkuliahan>> GetPerkuliahans();
+        Task<Perkuliahan> GetPerkuliahan(int id);
     }
 }

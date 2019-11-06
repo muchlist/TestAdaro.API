@@ -33,13 +33,12 @@ namespace TesAdaro.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<DataContext>(x => x.UseSqlite(Configuration.GetConnectionString("DefaultConnections")));
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                 .AddJsonOptions(opt => {
                     opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
                 });
             services.AddCors();
             services.AddAutoMapper(typeof(PerkuliahanRepository).Assembly);
-            services.AddScoped<IDosenRepository, DosenRepository>();
             services.AddScoped<IPerkuliahanRepository, PerkuliahanRepository>();
         }
 

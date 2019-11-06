@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TesAdaro.API.Migrations
 {
-    public partial class initt : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -59,7 +59,7 @@ namespace TesAdaro.API.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Nilai = table.Column<char>(nullable: false),
+                    Nilai = table.Column<string>(nullable: true),
                     DosenId = table.Column<int>(nullable: false),
                     MahasiswaId = table.Column<int>(nullable: false),
                     MataKuliahId = table.Column<int>(nullable: false)

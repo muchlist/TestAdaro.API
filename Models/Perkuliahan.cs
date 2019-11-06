@@ -3,7 +3,7 @@ namespace TesAdaro.API.Models
     public class Perkuliahan
     {
         public int Id { get; set; }
-        public char Nilai { get; set; }
+        public string Nilai { get; set; }
         public Dosen Dosen { get; set; }
         public int DosenId { get; set; }
         public Mahasiswa Mahasiswa { get; set; }

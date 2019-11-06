@@ -55,14 +55,10 @@ namespace TesAdaro.API.Data
 
         public async Task<IEnumerable<MataKuliah>> GetMataKuliahs()
         {
-            var mataKuliah = await _context.MataKuliahs.Include(d => d.Perkuliahans).ToListAsync();
-            return mataKuliah;
+            var mataKuliahs = await _context.MataKuliahs.Include(d => d.Perkuliahans).ToListAsync();
+            return mataKuliahs;
         }
 
-        public async Task<bool> SaveAll()
-        {
-            return await _context.SaveChangesAsync() > 0;
-        }
 
         public async Task<bool> DosenExist(string nip)
         {
@@ -77,6 +73,31 @@ namespace TesAdaro.API.Data
             if (await _context.Mahasiswas.AnyAsync(x => x.Nim == nim))
                 return true;
             return false;
+        }
+
+        public async Task<Perkuliahan> GetPerkuliahan(int id)
+        {
+            var perkuliahan = await _context.Perkuliahans
+                .Include(d => d.Dosen)
+                .Include(m => m.Mahasiswa)
+                .Include(k => k.MataKuliah).FirstOrDefaultAsync(p => p.Id == id);
+                
+            return perkuliahan;
+        }
+
+        public async Task<IEnumerable<Perkuliahan>> GetPerkuliahans()
+        {
+            var perkuliahans = await _context.Perkuliahans
+                .Include(d => d.Dosen)
+                .Include(m => m.Mahasiswa)
+                .Include(k => k.MataKuliah).ToListAsync();
+                
+            return perkuliahans;
+        }
+
+        public async Task<bool> SaveAll()
+        {
+            return await _context.SaveChangesAsync() > 0;
         }
 
     }

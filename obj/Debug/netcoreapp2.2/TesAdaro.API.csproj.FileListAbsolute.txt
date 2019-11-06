@@ -1,0 +1,14 @@
+C:\Users\admin\TesAdaroApp\TesAdaro.API\bin\Debug\netcoreapp2.2\TesAdaro.API.deps.json
+C:\Users\admin\TesAdaroApp\TesAdaro.API\bin\Debug\netcoreapp2.2\TesAdaro.API.runtimeconfig.json
+C:\Users\admin\TesAdaroApp\TesAdaro.API\bin\Debug\netcoreapp2.2\TesAdaro.API.runtimeconfig.dev.json
+C:\Users\admin\TesAdaroApp\TesAdaro.API\bin\Debug\netcoreapp2.2\TesAdaro.API.dll
+C:\Users\admin\TesAdaroApp\TesAdaro.API\bin\Debug\netcoreapp2.2\TesAdaro.API.pdb
+C:\Users\admin\TesAdaroApp\TesAdaro.API\obj\Debug\netcoreapp2.2\TesAdaro.API.csprojAssemblyReference.cache
+C:\Users\admin\TesAdaroApp\TesAdaro.API\obj\Debug\netcoreapp2.2\TesAdaro.API.csproj.CoreCompileInputs.cache
+C:\Users\admin\TesAdaroApp\TesAdaro.API\obj\Debug\netcoreapp2.2\TesAdaro.API.RazorAssemblyInfo.cache
+C:\Users\admin\TesAdaroApp\TesAdaro.API\obj\Debug\netcoreapp2.2\TesAdaro.API.RazorAssemblyInfo.cs
+C:\Users\admin\TesAdaroApp\TesAdaro.API\obj\Debug\netcoreapp2.2\TesAdaro.API.AssemblyInfoInputs.cache
+C:\Users\admin\TesAdaroApp\TesAdaro.API\obj\Debug\netcoreapp2.2\TesAdaro.API.AssemblyInfo.cs
+C:\Users\admin\TesAdaroApp\TesAdaro.API\obj\Debug\netcoreapp2.2\TesAdaro.API.RazorTargetAssemblyInfo.cache
+C:\Users\admin\TesAdaroApp\TesAdaro.API\obj\Debug\netcoreapp2.2\TesAdaro.API.dll
+C:\Users\admin\TesAdaroApp\TesAdaro.API\obj\Debug\netcoreapp2.2\TesAdaro.API.pdb

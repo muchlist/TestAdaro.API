@@ -19,7 +19,6 @@ namespace TesAdaro.API.Controllers
         {
             _mapper = mapper;
             _repo = repo;
-
         }
 
         [HttpGet]
@@ -38,18 +37,25 @@ namespace TesAdaro.API.Controllers
             return Ok(dosenToReturn);
         }
 
-        // [HttpPost("daftar")]
-        // public async Task<IActionResult> Daftar(DosenUDaftarDto dosenDto)
-        // {
-        //     if(await _repo.DosenExist(dosenDto.Nip))
-        //         return BadRequest("nip sudah terdaftar");
-        //     var dosenAkanDibuat = new Dosen
-        //     {
-        //         Nip = dosenDto.Nip,
-        //         NamaDosen = dosenDto.NamaDosen
-        //     };
-        //     var dosenSudahDibuat = await _repo.Add(dosenAkanDibuat);
-        //     return StatusCode(201);
-        // }
+        [HttpPost]
+        public async Task<IActionResult> AddDosen(DosenUDaftarDto dosenDto)
+        {
+            if (await _repo.DosenExist(dosenDto.Nip))
+                return BadRequest("Nip sudah terdaftar");
+
+            var dosenToCreate = new Dosen
+            {
+                NamaDosen = dosenDto.NamaDosen,
+                Nip = dosenDto.Nip
+            };
+
+            _repo.Add(dosenToCreate);
+            if (await _repo.SaveAll())
+            {
+                return StatusCode(201);
+            }
+            return BadRequest("Terjadi Kesalahan");
+        }
+
     }
 }
