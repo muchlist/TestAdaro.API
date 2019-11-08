@@ -4,6 +4,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using TesAdaro.API.Data;
 using TesAdaro.API.Dtos;
+using TesAdaro.API.Helpers;
 using TesAdaro.API.Models;
 
 namespace TesAdaro.API.Controllers
@@ -35,6 +36,19 @@ namespace TesAdaro.API.Controllers
         {
             var mahasiswas = await _repo.GetMahasiswas();
             var mahasiswaToReturn = _mapper.Map<IEnumerable<MahasiswaForListDto>>(mahasiswas);
+            return Ok(mahasiswaToReturn);
+        }
+
+        //URL /api/mahasiswa/paged?pageNumber=1&pageSize=5
+        [HttpGet("paged")]
+        public async Task<IActionResult> GetMahasiswasPaged([FromQuery]UserParams userParams)
+        {
+            var mahasiswas = await _repo.GetMahasiswasPaged(userParams);
+            var mahasiswaToReturn = _mapper.Map<IEnumerable<MahasiswaForListDto>>(mahasiswas);
+
+            Response.AddPagination(mahasiswas.Currentpage, mahasiswas.PageSize, 
+                mahasiswas.TotalCount, mahasiswas.TotalPages);
+
             return Ok(mahasiswaToReturn);
         }
 

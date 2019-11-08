@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using TesAdaro.API.Dtos;
+using TesAdaro.API.Helpers;
 using TesAdaro.API.Models;
 
 namespace TesAdaro.API.Data
@@ -73,9 +74,16 @@ namespace TesAdaro.API.Data
 
         public async Task<IEnumerable<Mahasiswa>> GetMahasiswas()
         {
-            var mahasiswa = await _context.Mahasiswas.Include(d => d.Perkuliahans).OrderByDescending(m => m.Id).ToListAsync();
-            return mahasiswa;
+            var mahasiswas = await _context.Mahasiswas.Include(d => d.Perkuliahans).OrderByDescending(m => m.Id).ToListAsync();
+            return mahasiswas;
         }
+
+        public async Task<PagedList<Mahasiswa>> GetMahasiswasPaged(UserParams userParams)
+        {
+            var mahasiswas = _context.Mahasiswas.Include(d => d.Perkuliahans).OrderByDescending(m => m.Id);
+            return await PagedList<Mahasiswa>.CreateAsync(mahasiswas, userParams.PageNumber,userParams.PageSize);
+        }
+
 
         public async Task UpdateMahasiswa(int id, MahasiswaForCreate mahasiswaDto)
         {
@@ -141,6 +149,15 @@ namespace TesAdaro.API.Data
             return perkuliahans;
         }
 
+        public async Task<PagedList<Perkuliahan>> GetPerkuliahansPaged(UserParams userParams)
+        {
+            var perkuliahans = _context.Perkuliahans
+                .Include(d => d.Dosen)
+                .Include(m => m.Mahasiswa)
+                .Include(k => k.MataKuliah).OrderByDescending(m => m.Id);
+            return await PagedList<Perkuliahan>.CreateAsync(perkuliahans, userParams.PageNumber,userParams.PageSize);
+        }
+
         public async Task<IEnumerable<Perkuliahan>> GetPerkuliahanPerMhs(int id)
         {
             var perkuliahans = await _context.Perkuliahans.Where(p => p.MahasiswaId == id)
@@ -178,7 +195,6 @@ namespace TesAdaro.API.Data
         {
             return await _context.SaveChangesAsync() > 0;
         }
-
 
     }
 }

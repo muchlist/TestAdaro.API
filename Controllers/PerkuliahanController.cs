@@ -4,6 +4,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using TesAdaro.API.Data;
 using TesAdaro.API.Dtos;
+using TesAdaro.API.Helpers;
 using TesAdaro.API.Models;
 
 namespace TesAdaro.API.Controllers
@@ -26,6 +27,19 @@ namespace TesAdaro.API.Controllers
         {
             var perkuliahans = await _repo.GetPerkuliahans();
             var perkuliahansToReturn = _mapper.Map<IEnumerable<PerkuliahanForDetailedDto>>(perkuliahans);
+            return Ok(perkuliahansToReturn);
+        }
+
+        //URL /api/perkuliahan/paged?pageNumber=1&pageSize=5
+        [HttpGet("paged")]
+        public async Task<IActionResult> GetPerkuliahansPaged([FromQuery]UserParams userParams)
+        {
+            var perkuliahans = await _repo.GetPerkuliahansPaged(userParams);
+            var perkuliahansToReturn = _mapper.Map<IEnumerable<PerkuliahanForDetailedDto>>(perkuliahans);
+
+            Response.AddPagination(perkuliahans.Currentpage, perkuliahans.PageSize, 
+                perkuliahans.TotalCount, perkuliahans.TotalPages);
+
             return Ok(perkuliahansToReturn);
         }
 
