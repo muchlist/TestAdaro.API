@@ -11,10 +11,12 @@ namespace TesAdaro.API.Data
         void Delete<T>(T entity) where T: class;
         Task<bool> SaveAll();
         Task<IEnumerable<Dosen>> GetDosens();
+        Task<IEnumerable<Dosen>> SearchDosen(string search);
         Task<Dosen> GetDosen(int id);
         Task UpdateDosen(int id, DosenForCreateDto dosenDto);
         Task<bool> DosenExist(string nip);
         Task<IEnumerable<Mahasiswa>> GetMahasiswas();
+        Task<IEnumerable<Mahasiswa>> SearchMahasiswa(string search);
         Task<Mahasiswa> GetMahasiswa(int id);
         Task UpdateMahasiswa(int id, MahasiswaForCreate mahasiswaDto);
         Task<bool> MahasiswaExist(string nim);
@@ -22,6 +24,7 @@ namespace TesAdaro.API.Data
         Task<MataKuliah> GetMataKuliah(int id);
         Task UpdateMataKuliah(int id, MataKuliahForCreate mataKuliahDto);
         Task<IEnumerable<Perkuliahan>> GetPerkuliahans();
+        Task<IEnumerable<Perkuliahan>> SearchPerkuliahans(string search);
         Task<IEnumerable<Perkuliahan>> GetPerkuliahanPerMhs(int id);
         Task<Perkuliahan> GetPerkuliahan(int id);
         Task UpdatePerkuliahan(int id, PerkuliahanForCreateDto perkuliahanDto);

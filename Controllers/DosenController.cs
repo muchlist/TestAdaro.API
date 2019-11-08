@@ -21,6 +21,14 @@ namespace TesAdaro.API.Controllers
             _repo = repo;
         }
 
+        [HttpGet("search/{search}")]
+        public async Task<IActionResult> Search(string search)
+        {
+            var dosens = await _repo.SearchDosen(search);
+            var dosensToReturn = _mapper.Map<IEnumerable<DosenForListDto>>(dosens);
+            return Ok(dosensToReturn);
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetDosens()
         {

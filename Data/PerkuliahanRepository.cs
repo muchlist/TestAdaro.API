@@ -31,6 +31,12 @@ namespace TesAdaro.API.Data
             return dosen;
         }
 
+        public async Task<IEnumerable<Dosen>> SearchDosen(string search)
+        {
+            var dosens = await _context.Dosens.Where(s => s.NamaDosen.ToLower().Contains(search.ToLower())).ToListAsync();
+            return dosens;
+        }
+
         public async Task<IEnumerable<Dosen>> GetDosens()
         {
             var dosens = await _context.Dosens.Include(d => d.Perkuliahans).ToListAsync();
@@ -57,6 +63,12 @@ namespace TesAdaro.API.Data
                 .Include(d => d.Perkuliahans)
                 .FirstOrDefaultAsync(p => p.Id == id);
             return mahasiswa;
+        }
+
+        public async Task<IEnumerable<Mahasiswa>> SearchMahasiswa(string search)
+        {
+            var mahasiswas = await _context.Mahasiswas.Where(s => s.NamaMhs.ToLower().Contains(search.ToLower())).ToListAsync();
+            return mahasiswas;
         }
 
         public async Task<IEnumerable<Mahasiswa>> GetMahasiswas()
@@ -109,8 +121,14 @@ namespace TesAdaro.API.Data
                 .Include(d => d.Dosen)
                 .Include(m => m.Mahasiswa)
                 .Include(k => k.MataKuliah).FirstOrDefaultAsync(p => p.Id == id);
-                
+
             return perkuliahan;
+        }
+
+        public async Task<IEnumerable<Perkuliahan>> SearchPerkuliahans(string search)
+        {
+            var perkuliahans = await _context.Perkuliahans.Where(s => s.Mahasiswa.NamaMhs.ToLower().Contains(search.ToLower()) || s.MataKuliah.NamaMK.ToLower().Contains(search.ToLower())).ToListAsync();
+            return perkuliahans;
         }
 
         public async Task<IEnumerable<Perkuliahan>> GetPerkuliahans()
@@ -119,7 +137,7 @@ namespace TesAdaro.API.Data
                 .Include(d => d.Dosen)
                 .Include(m => m.Mahasiswa)
                 .Include(k => k.MataKuliah).OrderByDescending(m => m.Id).ToListAsync();
-                
+
             return perkuliahans;
         }
 
@@ -129,7 +147,7 @@ namespace TesAdaro.API.Data
                 .Include(d => d.Dosen)
                 .Include(m => m.Mahasiswa)
                 .Include(k => k.MataKuliah).OrderByDescending(m => m.Id).ToListAsync();
-                
+
             return perkuliahans;
         }
 
@@ -141,7 +159,7 @@ namespace TesAdaro.API.Data
                 .FirstOrDefaultAsync(p => p.Id == perkuliahanDto.MataKuliahId);
             var mahasiswa = await _context.Mahasiswas
                 .FirstOrDefaultAsync(p => p.Id == perkuliahanDto.MahasiswaId);
-            
+
             var perkuliahan = await _context.Perkuliahans
                 .Include(d => d.Dosen)
                 .Include(m => m.Mahasiswa)
@@ -160,5 +178,7 @@ namespace TesAdaro.API.Data
         {
             return await _context.SaveChangesAsync() > 0;
         }
+
+
     }
 }

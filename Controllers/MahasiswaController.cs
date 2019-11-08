@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -23,6 +22,14 @@ namespace TesAdaro.API.Controllers
             _repo = repo;
         }
 
+        [HttpGet("search/{search}")]
+        public async Task<IActionResult> Search(string search)
+        {
+            var mahasiswas = await _repo.SearchMahasiswa(search);
+            var mahasiswaToReturn = _mapper.Map<IEnumerable<MahasiswaForListDto>>(mahasiswas);
+            return Ok(mahasiswaToReturn);
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetMahasiswas()
         {
@@ -38,6 +45,7 @@ namespace TesAdaro.API.Controllers
             var mahasiswaToReturn = _mapper.Map<MahasiswaForDetailDto>(mahasiswa);
             return Ok(mahasiswaToReturn);
         }
+
 
         [HttpPost]
         public async Task<IActionResult> AddMahasiswa([FromBody] MahasiswaForCreate mahasiswaDto)

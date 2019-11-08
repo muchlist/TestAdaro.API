@@ -29,6 +29,14 @@ namespace TesAdaro.API.Controllers
             return Ok(perkuliahansToReturn);
         }
 
+        [HttpGet("search/{search}")]
+        public async Task<IActionResult> Search(string search)
+        {
+            var perkuliahans = await _repo.SearchDosen(search);
+            var perkuliahansToReturn = _mapper.Map<IEnumerable<PerkuliahanForDetailedDto>>(perkuliahans);
+            return Ok(perkuliahansToReturn);
+        }
+
         [HttpGet("mhs/{id}")]
         public async Task<IActionResult> GetPerkuliahanPerMhs(int id)
         {
