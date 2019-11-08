@@ -22,6 +22,7 @@ namespace TesAdaro.API.Data
         Task<MataKuliah> GetMataKuliah(int id);
         Task UpdateMataKuliah(int id, MataKuliahForCreate mataKuliahDto);
         Task<IEnumerable<Perkuliahan>> GetPerkuliahans();
+        Task<IEnumerable<Perkuliahan>> GetPerkuliahanPerMhs(int id);
         Task<Perkuliahan> GetPerkuliahan(int id);
         Task UpdatePerkuliahan(int id, PerkuliahanForCreateDto perkuliahanDto);
     }

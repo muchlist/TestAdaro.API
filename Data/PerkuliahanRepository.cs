@@ -123,6 +123,16 @@ namespace TesAdaro.API.Data
             return perkuliahans;
         }
 
+        public async Task<IEnumerable<Perkuliahan>> GetPerkuliahanPerMhs(int id)
+        {
+            var perkuliahans = await _context.Perkuliahans.Where(p => p.MahasiswaId == id)
+                .Include(d => d.Dosen)
+                .Include(m => m.Mahasiswa)
+                .Include(k => k.MataKuliah).OrderByDescending(m => m.Id).ToListAsync();
+                
+            return perkuliahans;
+        }
+
         public async Task UpdatePerkuliahan(int id, PerkuliahanForCreateDto perkuliahanDto)
         {
             var dosen = await _context.Dosens
@@ -150,6 +160,5 @@ namespace TesAdaro.API.Data
         {
             return await _context.SaveChangesAsync() > 0;
         }
-
     }
 }

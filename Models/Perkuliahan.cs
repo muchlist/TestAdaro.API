@@ -1,8 +1,11 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace TesAdaro.API.Models
 {
     public class Perkuliahan
     {
         public int Id { get; set; }
+        [StringLength(1)]
         public string Nilai { get; set; }
         public Dosen Dosen { get; set; }
         public int DosenId { get; set; }

@@ -8,9 +8,12 @@ namespace TesAdaro.API.Models
     public class Mahasiswa
     {
         public int Id { get; set; }
+        [StringLength(9)]
         public string Nim { get; set; }
+        [StringLength(25)]
         public string NamaMhs { get; set; }
         public DateTime TglLahir { get; set; }
+        [StringLength(50)]
         public string Alamat { get; set; }
         public string JenisKelamin { get; set; }
         public ICollection<Perkuliahan> Perkuliahans { get; set; }
